@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+    <h2>My Profile</h2>
+    <form th:action="@{/profile/update}" th:object="${personDto}" method="post">
+
+            <div>
+                <label>Email:</label>
+                <input type="email" th:field="*{email}">
+            </div>
+            <div>
+                <label>First Name:</label>
+                <input type="text" th:field="*{firstName}">
+            </div>
+            <div>
+                <label>Last Name:</label>
+                <input type="text" th:field="*{lastName}">
+            </div>
+            <div>
+                <label>New Password:</label>
+                <input type="password" th:field="*{newPassword}" placeholder="Leave empty to keep current">
+            </div>
+        <button type="submit">Update</button>
+    </form>
+
+    <form th:action="@{/profile/delete}" method="post">
+        <button type="submit">Delete My Account</button>
+    </form>
+
+    <div th:if="${isAdmin}">
+        <a href="/admin/users">Admin Panel</a>
+    </div>
+</body>
+</html>

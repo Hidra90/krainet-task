@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Person edit</title>
+</head>
+<body>
+    <h2>Person edit</h2>
+    <form th:action="@{/persons/update}" th:object="${personDto}" method="post">
+        <input type="hidden" th:field="*{id}">
+
+        <div>
+            <label>Username:</label>
+            <input type="text" th:field="*{username}">
+        </div>
+
+        <div>
+            <label>Password:</label>
+            <input type="password" name="password" placeholder="New password">
+        </div>
+
+        <div>
+            <label>Email:</label>
+            <input type="email" th:field="*{email}">
+        </div>
+
+        <div>
+            <label>First Name:</label>
+            <input type="text" th:field="*{firstName}">
+        </div>
+
+        <div>
+            <label>Last Name:</label>
+            <input type="text" th:field="*{lastName}">
+        </div>
+
+        <div>
+            <label>Role:</label>
+            <select th:field="*{role}">
+                <option th:each="r : ${roles}"
+                        th:value="${r}"
+                        th:text="${r}"></option>
+            </select>
+        </div>
+
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <a href="/persons">Back to person</a>
+</body>
+</html>
