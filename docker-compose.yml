@@ -1,9 +1,6 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres:14
-    container_name: krainet-db
     environment:
       POSTGRES_USER: anton
       POSTGRES_PASSWORD: 1234
@@ -13,16 +10,13 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U anton -d krainet"]
-      interval: 5s
+      test: [ "CMD-SHELL", "pg_isready -U anton -d krainet" ]
+      interval: 10s
       timeout: 5s
       retries: 5
 
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: krainet-app
+    image: krainet-app
     depends_on:
       postgres:
         condition: service_healthy
@@ -30,10 +24,8 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/krainet
       SPRING_DATASOURCE_USERNAME: anton
       SPRING_DATASOURCE_PASSWORD: 1234
-      SPRING_FLYWAY_ENABLED: "true"
     ports:
       - "8081:8081"
-    restart: unless-stopped
 
 volumes:
   postgres_data:
